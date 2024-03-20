@@ -1,54 +1,36 @@
-#ifndef SWITCH_H_
-#define SWITCH_H_
-
+#ifndef Scheduler_H_
+#define Scheduler_H_
 
 /********************************************************************************************************/
 /************************************************Includes************************************************/
 /********************************************************************************************************/
 
-#include "GPIO.h"
+#include "StdTypes.h"
 
 /********************************************************************************************************/
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
 
-#define SWITCH_PRESSED             0U
-#define SWITCH_RELEASED            1U
 
-#define SWITCH_MODE_NOPULL         0x000UL
-#define SWITCH_MODE_PULLUP         0x010UL
-#define SWITCH_MODE_PULLDOWN       0x020UL
-
-#define SWITCH_ACTIVE_STATE_HIGH   0U
-#define SWITCH_ACTIVE_STATE_LOW    1U
 
 /********************************************************************************************************/
 /************************************************Types***************************************************/
 /********************************************************************************************************/
 
+typedef void(*Sched_CallBackPtr_t)(void);
+
 typedef struct{
-    void *port;
-    u32   pin;
-    u32   mode;
-}SWITCH_switchConfig_t;
-
-
-typedef enum{
-    SWITCH_Ok,
-    SWITCH_Nok,
-    SWITCH_NullPtr,
-    SWITCH_InvalidSwitchName,
-}SWITCH_errorState_t;
+    u32 periodicityMS;
+    u32 firstDelayMS;
+    Sched_CallBackPtr_t callBack;
+}Sched_runnable_t;
 
 /********************************************************************************************************/
 /************************************************APIs****************************************************/
 /********************************************************************************************************/
 
+void Sched_init(void);
+void Sched_start(void);
 
-void SWITCH_init(void);
 
-u32 SWITCH_getState(u32 switchName);
-
-u32 SWITCH_getStateAsync(u32 switchName);
-
-#endif 
+#endif // Scheduler_H_

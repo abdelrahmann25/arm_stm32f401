@@ -57,7 +57,7 @@ SYSTICK_errorState_t SYSTICK_SelectClockSource(u32 clkSrc);
 SYSTICK_errorState_t SYSTICK_StartCounting(u32 mode);
 void SYSTICK_StopCounting(void);
 
-SYSTICK_errorState_t SYSTICK_SetTimer_ms(u32 time_ms);
+SYSTICK_errorState_t SYSTICK_SetTime_ms(u32 time_ms);
 SYSTICK_errorState_t SYSTICK_SetCallBack(SYSTICK_callBackFunPtr_t callBackPtr, u8 index);
 
 void SYSTICK_IsExpired(void);

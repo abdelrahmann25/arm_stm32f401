@@ -14,8 +14,8 @@ const SWITCH_switchConfig_t Switches[(u32)_NUM_OF_SWITCHES] =
 {
     [SWITCH_ALARM] =
     {
-        .port = GPIO_B,
-        .pin = GPIO_PIN0,
+        .port = GPIO_A,
+        .pin = GPIO_PIN6,
         .mode = SWITCH_MODE_PULLUP
     },
     [SWITCH_MOTOR] =

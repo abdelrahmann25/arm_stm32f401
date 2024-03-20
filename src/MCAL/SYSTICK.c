@@ -92,7 +92,7 @@ void SYSTICK_StopCounting(void)
 }
 
 
-SYSTICK_errorState_t SYSTICK_SetTimer_ms(u32 time_ms)
+SYSTICK_errorState_t SYSTICK_SetTime_ms(u32 time_ms)
 {
     SYSTICK_errorState_t errorState = SYSTICK_Nok;
     u64 loadValue = ((time_ms*SYSTICK_CLOCK_VALUE)/1000) - 1;

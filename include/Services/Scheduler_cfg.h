@@ -1,54 +1,37 @@
-#ifndef SWITCH_H_
-#define SWITCH_H_
-
+#ifndef Scheduler_cfg_H_
+#define Scheduler_cfg_H_
 
 /********************************************************************************************************/
 /************************************************Includes************************************************/
 /********************************************************************************************************/
 
-#include "GPIO.h"
+#include "Scheduler.h"
 
 /********************************************************************************************************/
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
 
-#define SWITCH_PRESSED             0U
-#define SWITCH_RELEASED            1U
-
-#define SWITCH_MODE_NOPULL         0x000UL
-#define SWITCH_MODE_PULLUP         0x010UL
-#define SWITCH_MODE_PULLDOWN       0x020UL
-
-#define SWITCH_ACTIVE_STATE_HIGH   0U
-#define SWITCH_ACTIVE_STATE_LOW    1U
+#define TICK_TIME       (u32)1
 
 /********************************************************************************************************/
 /************************************************Types***************************************************/
 /********************************************************************************************************/
 
-typedef struct{
-    void *port;
-    u32   pin;
-    u32   mode;
-}SWITCH_switchConfig_t;
-
-
 typedef enum{
-    SWITCH_Ok,
-    SWITCH_Nok,
-    SWITCH_NullPtr,
-    SWITCH_InvalidSwitchName,
-}SWITCH_errorState_t;
+    SWITCH_getState_5MS,
+    GetSwitchState_50MS,
+    TrafficLights_1000MS,
+    /*ToggleRedLED_250MS,
+    ToggleGreenLED_500MS,
+    ToggleYellowLED_1000MS,*/
+    
+    _NUM_OF_RUNNABLES
+}Sched_runnablesNames_t;
 
 /********************************************************************************************************/
 /************************************************APIs****************************************************/
 /********************************************************************************************************/
 
 
-void SWITCH_init(void);
 
-u32 SWITCH_getState(u32 switchName);
-
-u32 SWITCH_getStateAsync(u32 switchName);
-
-#endif 
+#endif // Scheduler_cfg_H_

@@ -144,7 +144,7 @@ GPIO_errorState_t GPIO_setPin(void* port, u32 pin, u32 state)
     else
     {
         Loc_errorState = GPIO_Ok;
-        GPIO->BSRR |= MASK_1_BITS<<(pin*state);
+        GPIO->BSRR = MASK_1_BITS<<(pin + (!state * 16));
     }
 
     return Loc_errorState;

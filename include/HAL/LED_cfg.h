@@ -3,8 +3,9 @@
 
 
 typedef enum{
-    LED_ALARM,
-    LED_MOTOR,
+    LED_Red,
+    LED_Green,
+    LED_Yellow,
 
     _NUM_OF_LEDS
 }LED_ledsInSystem;

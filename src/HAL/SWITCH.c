@@ -37,6 +37,9 @@
 
 extern const SWITCH_switchConfig_t Switches[(u32)_NUM_OF_SWITCHES];
 
+static u8 switchState[_NUM_OF_SWITCHES] = {0};
+
+
 /********************************************************************************************************/
 /*****************************************Static Functions Prototype*************************************/
 /********************************************************************************************************/
@@ -64,16 +67,12 @@ void SWITCH_init(void)
     }
 }
 
-SWITCH_errorState_t SWITCH_getState(u32 switchName, u32 *state)
+u32 SWITCH_getState(u32 switchName)
 {
     SWITCH_errorState_t errorState = SWITCH_Nok;
     u32 pinRead = 0;
 
-    if(state == NULLPTR)
-    {
-        errorState = SWITCH_NullPtr;
-    }
-    else if(!IS_SWITCH_NAME_VALID(switchName))
+    if(!IS_SWITCH_NAME_VALID(switchName))
     {
         errorState = SWITCH_InvalidSwitchName;
     }
@@ -83,8 +82,43 @@ SWITCH_errorState_t SWITCH_getState(u32 switchName, u32 *state)
         GPIO_getPin(Switches[switchName].port, Switches[switchName].pin, &pinRead);
 
         pinRead = pinRead ^ ((Switches[switchName].mode & SWITCH_MODE_PULLUP) >> 5);
-        *state = pinRead;
     }
+    errorState = errorState;
+    return pinRead;
+}
 
-    return errorState;
+
+void _SWITCH_getState_5MS_runnable(void)
+{
+    static u32 switchPrevState[_NUM_OF_SWITCHES] = {0};
+    static u32 switchStateCounter[_NUM_OF_SWITCHES] = {0};
+    u32 iter = 0, currState = 0;
+
+    for(iter = 0; iter < _NUM_OF_SWITCHES; iter++)
+    {
+        GPIO_getPin(Switches[iter].port, Switches[iter].pin, &currState);
+        currState = currState ^ ((Switches[iter].mode & SWITCH_MODE_PULLUP) >> 5);
+
+        if(currState == switchPrevState[iter])
+        {
+            switchStateCounter[iter]++;
+        }
+        else
+        {
+            switchStateCounter[iter] = 0;
+        }
+
+        if(switchStateCounter[iter] == 5)
+        {
+            switchState[iter] = currState;
+            switchStateCounter[iter] = 0;
+        }
+
+        switchPrevState[iter] = currState;
+    }
+}
+
+u32 SWITCH_getStateAsync(u32 switchName)
+{
+    return switchState[switchName];
 }

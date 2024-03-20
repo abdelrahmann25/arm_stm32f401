@@ -78,7 +78,7 @@ typedef signed int s32;
 /**********************************************************************/
 
 #define GPIO_SET_STATE           0x01UL
-#define GPIO_RESET_STATE         0x02UL
+#define GPIO_RESET_STATE         0x00UL
 
 /***********************************************************************/
 
